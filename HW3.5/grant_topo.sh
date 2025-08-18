@@ -49,6 +49,13 @@ ip netns exec hostA ip route add 192.168.1.0/24 via 192.168.0.200
 ip netns exec inter ip route add 192.168.0.0/24 via 192.168.1.1
 
 # 在 Gate 上面安裝 iptables
-docker exec gate bash -c "apt update && apt install -y iptables"  
+docker exec gate bash -c "apt update && apt install -y iptables"
+# 設定FORWARD  
 ip netns exec gate iptables -A FORWARD -j DROP
 ip netns exec gate iptables -A FORWARD -j ACCEPT
+# 設定 INPUT
+ip netns exec gate iptables -A INPUT -j DROP
+ip netns exec gate iptables -A INPUT -j ACCEPT
+# 設定 OUTPUT
+ip netns exec gate iptables -A OUTPUT -j DROP
+ip netns exec gate iptables -A OUTPUT -j DROP
